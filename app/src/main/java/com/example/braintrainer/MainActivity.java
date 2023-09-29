@@ -13,30 +13,45 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView textViewQuestion;
     private TextView textViewTimer;
+    private TextView textViewScore;
+    private TextView textViewOpinion0;
+    private TextView textViewOpinion1;
+    private TextView textViewOpinion2;
+    private TextView textViewOpinion3;
 
-    @Override
+    private String question;
+    private int rightAnswer;
+    private int rightAnswerPosition;
+    private boolean isPositive;
+    private int min = 5;
+    private int max = 30;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textViewQuestion = findViewById(R.id.textViewQuestion);
         textViewTimer = findViewById(R.id.textViewTimer);
-        //CountDownTimer  - это абстрактный класс, в котором можно реализовать методы (так как он нам понадобиться только один раз используем анонимный класс)
-        CountDownTimer timer = new CountDownTimer(6000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) { //метод вызывается в каждую секунду
-                //получаем сколько секунд осталось и приводим результат к типу int
-                int seconds = (int) (millisUntilFinished / 1000);
-                seconds++;  //что бы при завершении отсчета не висело 0 на экране долго
-                //выводим на экран
-                textViewTimer.setText(Integer.toString(seconds));
-            }
+        textViewScore = findViewById(R.id.textViewScore);
+        textViewOpinion0 = findViewById(R.id.textViewOpinion0);
+        textViewOpinion1 = findViewById(R.id.textViewOpinion1);
+        textViewOpinion2 = findViewById(R.id.textViewOpinion2);
+        textViewOpinion3 = findViewById(R.id.textViewOpinion3);
+    }
 
-            @Override
-            public void onFinish() {  //метод , который вызывается при завершении отчета
-                Toast.makeText(MainActivity.this, " таймер завершен ", Toast.LENGTH_SHORT).show();
-                textViewTimer.setText(Integer.toString(0)); //что бы при завершении отсчета не висело 0 на экране долго
-            }
-        };
-        timer.start();
+    private void generateQuestion() {
+        int a = (int) (Math.random() * (max - min + 1) + min);
+        int b = (int) (Math.random() * (max - min + 1) + min);
+        int mark = (int) (Math.random() * 2);
+        isPositive = mark == 1;
+        if (isPositive) {
+            rightAnswer = a + b;
+            question = String.format("%s+%s", a, b);
+        } else {
+            rightAnswer = a - b;
+            question = String.format("%s-%s", a, b);
+        }
+        rightAnswerPosition = (int) (Math.random() * 4);
     }
 }
