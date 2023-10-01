@@ -3,6 +3,7 @@ package com.example.braintrainer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -59,7 +60,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-
+                Intent intent=new Intent(MainActivity.this,ScoreActivity.class);
+                intent.putExtra("result", countOfRightAnswer);
+                startActivity(intent);
             }
         };
         timer.start();
