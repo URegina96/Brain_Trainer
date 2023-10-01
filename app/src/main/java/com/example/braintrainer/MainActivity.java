@@ -86,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickAnswer(View view) {
+        TextView textView = (TextView) view;
+        String answer = textView.getText().toString();
+        int chosenAnswer = Integer.parseInt(answer);
+        if (chosenAnswer == rightAnswer) {
+            Toast.makeText(this, "Верно", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Неверно", Toast.LENGTH_SHORT).show();
+        }
         playNext();
     }
 }
