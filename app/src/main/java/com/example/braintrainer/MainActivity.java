@@ -60,7 +60,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                Intent intent=new Intent(MainActivity.this,ScoreActivity.class);
+                gameOver = true;
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                int max = preferences.getInt("max", 0);
+                if (countOfRightAnswer >= max) {
+                    preferences.edit().putInt("max", countOfRightAnswer).apply();
+                }
+                Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
                 intent.putExtra("result", countOfRightAnswer);
                 startActivity(intent);
             }
