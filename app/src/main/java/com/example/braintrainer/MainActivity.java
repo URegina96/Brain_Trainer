@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private int max = 30;
     private int countOfQuestion = 0;
     private int countOfRightAnswer = 0;
+    private boolean gameOver = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +51,18 @@ public class MainActivity extends AppCompatActivity {
         options.add(textViewOpinion2);
         options.add(textViewOpinion3);
         playNext();
+        CountDownTimer timer = new CountDownTimer(6000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                textViewTimer.setText(getTimer(millisUntilFinished));
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        timer.start();
     }
 
     private void playNext() {
@@ -87,6 +101,13 @@ public class MainActivity extends AppCompatActivity {
             result = (int) (Math.random() * max * 2 + 1) - (max - min);
         } while (result == rightAnswer);
         return result;
+    }
+
+    private String getTimer(long millis) {
+        int seconds = (int) (millis / 1000);
+        int minutes = seconds / 60;
+        seconds = seconds % 60;
+        return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
     }
 
     public void onClickAnswer(View view) {
