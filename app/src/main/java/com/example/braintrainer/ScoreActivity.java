@@ -3,7 +3,9 @@ package com.example.braintrainer;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,7 +20,9 @@ public class ScoreActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("result")) {
             int result = intent.getIntExtra("result", 0);
-            String score = String.format("Результат: %s", result);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            int max = preferences.getInt("max", 0);
+            String score = String.format("Результат: %s \nМаксимальный результат: %s ", result, max);
             textViewResult.setText(score);
         }
     }
