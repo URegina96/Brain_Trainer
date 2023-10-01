@@ -11,6 +11,8 @@ import android.preference.PreferenceManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView textViewQuestion;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textViewOpinion1;
     private TextView textViewOpinion2;
     private TextView textViewOpinion3;
+    private ArrayList<TextView> options = new ArrayList<>();
 
     private String question;
     private int rightAnswer;
@@ -38,6 +41,18 @@ public class MainActivity extends AppCompatActivity {
         textViewOpinion1 = findViewById(R.id.textViewOpinion1);
         textViewOpinion2 = findViewById(R.id.textViewOpinion2);
         textViewOpinion3 = findViewById(R.id.textViewOpinion3);
+        options.add(textViewOpinion0);
+        options.add(textViewOpinion1);
+        options.add(textViewOpinion2);
+        options.add(textViewOpinion3);
+        generateQuestion();
+        for (int i = 0; i < options.size(); i++) {
+            if (i == rightAnswerPosition) {
+                options.get(i).setText(Integer.toString(rightAnswer));
+            } else {
+                options.get(i).setText(Integer.toString(generateWrongAnswer()));
+            }
+        }
     }
 
     private void generateQuestion() {
@@ -52,6 +67,15 @@ public class MainActivity extends AppCompatActivity {
             rightAnswer = a - b;
             question = String.format("%s-%s", a, b);
         }
+        textViewQuestion.setText(question);
         rightAnswerPosition = (int) (Math.random() * 4);
+    }
+
+    private int generateWrongAnswer() {
+        int result;
+        do {
+            result = (int) (Math.random() * max * 2 + 1) - (max - min);
+        } while (result == rightAnswer);
+        return result;
     }
 }
