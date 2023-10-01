@@ -52,10 +52,13 @@ public class MainActivity extends AppCompatActivity {
         options.add(textViewOpinion2);
         options.add(textViewOpinion3);
         playNext();
-        CountDownTimer timer = new CountDownTimer(6000, 1000) {
+        CountDownTimer timer = new CountDownTimer(20000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 textViewTimer.setText(getTimer(millisUntilFinished));
+                if (millisUntilFinished < 10000) {
+                    textViewTimer.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                }
             }
 
             @Override
